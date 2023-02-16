@@ -5,11 +5,6 @@
     "declarationDir": "dist/types",
     "emitDeclarationOnly": true
   },
-  "include": [
-    "./**/*.ts"
-  ],
-  "exclude": [
-    "./**/*.stories.js",
-    "./dist"
-  ]
+  "include": ["./**/*.ts", "src/card/Card.stories.ts", "src/card/Card.js"],
+  "exclude": ["./**/*.stories.js", "./dist"]
 }
