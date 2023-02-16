@@ -14,9 +14,9 @@
     "start": "yarn copy:static && webpack --env development --watch"
   },
   "dependencies": {
-    "@in/ui": "0.0.1",
     "@in/common": "0.0.1",
     "@in/style": "0.0.1",
+    "@in/ui": "0.0.1",
     "@ungap/custom-elements": "1.0.0",
     "@webcomponents/template-shadowroot": "0.1.0",
     "broadcastchannel-polyfill": "1.0.1",
