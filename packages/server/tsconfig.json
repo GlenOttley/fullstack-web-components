@@ -6,11 +6,6 @@
     "module": "ES2020",
     "outDir": "./dist"
   },
-  "include": [
-    "./**/*.js"
-  ],
-  "exclude": [
-    "./**/*.stories.js",
-    "./dist"
-  ]
+  "include": ["./**/*.js"],
+  "exclude": ["./**/*.stories.js", "./dist"]
 }

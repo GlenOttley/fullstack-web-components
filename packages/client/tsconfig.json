@@ -12,11 +12,6 @@
     "outDir": "./dist/fesm2015",
     "sourceMap": true
   },
-  "include": [
-    "./**/*.ts"
-  ],
-  "exclude": [
-    "./**/*.stories.js",
-    "./dist"
-  ]
+  "include": ["./**/*.ts"],
+  "exclude": ["./**/*.stories.js", "./dist"]
 }

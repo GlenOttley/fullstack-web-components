@@ -1,8 +1,8 @@
 export class CardComponent extends HTMLElement {
   constructor() {
-    super()
-    const shadowRoot = this.attachShadow({ mode: 'open' })
-    const template = document.createElement('template')
+    super();
+    const shadowRoot = this.attachShadow({ mode: 'open' });
+    const template = document.createElement('template');
     template.innerHTML = `
     <style>
       :host {
@@ -38,9 +38,9 @@ export class CardComponent extends HTMLElement {
     <footer>
       <slot name="footer" />
     </footer>
-    `
-    shadowRoot.appendChild(template.content.cloneNode(true))
+    `;
+    shadowRoot.appendChild(template.content.cloneNode(true));
   }
 }
 
-customElements.define('in-card', CardComponent)
+customElements.define('in-card', CardComponent);

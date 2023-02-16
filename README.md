@@ -8,10 +8,9 @@ This book requires node ^16.3.0 and yarn ^1.22.11 installed prior to installatio
 
 1. Fork this repository
 2. Clone the fork of this repository `git clone https://github.com/{username}/fullstack-web-components.git`
-2. Install dependencies `yarn`
-3. Checkout Chapter 1 Branch `git checkout chapter/1`
-4. Start development server `yarn start`
-
+3. Install dependencies `yarn`
+4. Checkout Chapter 1 Branch `git checkout chapter/1`
+5. Start development server `yarn start`
 
 ### Navigation
 
@@ -80,17 +79,16 @@ git commit -a -m "feat: updated dependencies"
 
 Resume with the content of the book.
 
-
 ### Developing in a monorepo
 
 This repository is a monorepo. `lerna` orchestrates the build for several packages in the monorepo.
 
 #### Packages
 
-| Package      | Directory | Purpose    |
-|--------------|-----------|------------|
-| @in/ui       | packages/component      | Web Component user interface library        |
-| @in/common      | packages/common  |  Common utilities for coding user interfaces     |
-| @in/client      | packages/client  |  Client application    |
-| @in/server      | packages/server  |  Server application    |
-| @in/style      | packages/style  |  Common CSS styling and assets exported from the design system   |
+| Package    | Directory          | Purpose                                                       |
+| ---------- | ------------------ | ------------------------------------------------------------- |
+| @in/ui     | packages/component | Web Component user interface library                          |
+| @in/common | packages/common    | Common utilities for coding user interfaces                   |
+| @in/client | packages/client    | Client application                                            |
+| @in/server | packages/server    | Server application                                            |
+| @in/style  | packages/style     | Common CSS styling and assets exported from the design system |
