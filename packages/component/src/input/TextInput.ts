@@ -73,39 +73,59 @@ export class TextInputComponent extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['required', 'value', 'disabled'];
-  }
-
-  onValidate(showError: boolean) {
-    validate(this, showError);
+    return [
+      'name',
+      'type',
+      'required',
+      'minlength',
+      'maxlength',
+      'pattern',
+      'list',
+      'placeholder',
+      'readonly',
+      'spellcheck',
+      'disabled',
+      'value',
+    ];
   }
 
   attributeChangedCallback(name, prev, next) {
     this.$attr[name] = next;
     switch (name) {
-      case 'value': {
+      case 'value':
         this.value = next;
         break;
-      }
-      case 'required': {
-        this.required = next;
-        break;
-      }
-      case 'disabled': {
+      case 'disabled':
         this.disabled = next;
         break;
-      }
+      case 'required':
+        this.required = next;
+        break;
+      case 'type':
+        this.$input.setAttribute('type', next);
+        break;
+      case 'minlength':
+        this.$input.setAttribute('minlength', next);
+        break;
+      case 'maxlength':
+        this.$input.setAttribute('maxlength', next);
+        break;
+      case 'pattern':
+        this.$input.setAttribute('pattern', next);
+        break;
+      case 'list':
+        this.$input.setAttribute('list', next);
+        break;
+      case 'placeholder':
+        this.$input.setAttribute('placeholder', next);
+        break;
+      case 'readonly':
+        this.$input.setAttribute('readonly', next);
+        break;
+      case 'spellcheck':
+        this.$input.setAttribute('spellcheck', next);
+        break;
     }
-  }
-
-  connectedCallback() {
-    this.$input.onblur = () => {
-      this.onValidate(true);
-    };
-    for (let prop in this.$attr) {
-      this.$input.setAttribute(prop, this.$attr[prop]);
-    }
-    this.onValidate(false);
   }
 
   get value(): string {
@@ -142,8 +162,42 @@ export class TextInputComponent extends HTMLElement {
     }
   }
 
+  get type() {
+    return this.$input.type ?? 'text';
+  }
+
+  set type(type: string) {
+    this.$input.setAttribute('type', type);
+  }
+
+  get list() {
+    return this.$input.list;
+  }
+
+  get minLength() {
+    return this.$input.minLength;
+  }
+
+  set minLength(min: number) {
+    this.$input.minLength = min;
+  }
+
+  connectedCallback() {
+    this.$input.onblur = () => {
+      this.onValidate(true);
+    };
+    for (let prop in this.$attr) {
+      this.$input.setAttribute(prop, this.$attr[prop]);
+    }
+    this.onValidate(false);
+  }
+
   formDisabledCallback(disabled) {
     this.disabled = disabled;
+  }
+
+  onValidate(showError: boolean) {
+    validate(this, showError);
   }
 
   checkValidity() {
