@@ -14,6 +14,54 @@ export class TextInputComponent extends HTMLElement {
     const template = document.createElement('template');
 
     template.innerHTML = `
+    <style>
+      :host {
+        display: block;
+        font-family: var(--font-default);
+        font-size: var(--font-body-sm);
+      }
+      input {
+        height: var(--input-min-dimension);
+        width: 100%;
+        border-radius: var(--radius-sm);
+        border: var(--border-default);
+        font-size: var(--font-body-md);
+        padding-left: var(--padding-sm);
+        outline: none;
+        box-sizing: border-box;
+      }
+      input:focus,
+      input:focus:hover,
+      input:active {
+        border: var(--border-focus);
+      }
+      input.error,
+      input.error:hover,
+      input.error:focus,
+      input.error:active {
+        border: var(--border-error);
+        outline: none;
+        box-shadow: none;
+        color: var(--color-error);
+      }
+      .message {
+        margin-top: var(--margin-xxs);
+        color: var(--color-error);
+        font-weight: var(--font-weight-default);
+      }
+      input[disabled] {
+        opacity: var(---color-disable);
+        background: var(--color-disable);
+        border: var(--border-disable);
+      }
+      input[disabled]:hover,
+      input[disabled]:focus,
+      input[disabled]:active {
+        border: var(--border-disable);
+        outline: none;
+        box-shadow: none;
+      }
+    </style>
     <div class="control">
       <input type="text" />
     </div>
@@ -25,7 +73,7 @@ export class TextInputComponent extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['required', 'value'];
+    return ['required', 'value', 'disabled'];
   }
 
   onValidate(showError: boolean) {
@@ -41,6 +89,10 @@ export class TextInputComponent extends HTMLElement {
       }
       case 'required': {
         this.required = next;
+        break;
+      }
+      case 'disabled': {
+        this.disabled = next;
         break;
       }
     }
@@ -77,6 +129,23 @@ export class TextInputComponent extends HTMLElement {
     }
   }
 
+  get disabled(): boolean {
+    return this.$input.disabled;
+  }
+
+  set disabled(value: boolean | string) {
+    if (value === 'true' || value === true) {
+      this.$input.setAttribute('disabled', 'true');
+    }
+    if (value === 'false' || value === false) {
+      this.$input.removeAttribute('disabled');
+    }
+  }
+
+  formDisabledCallback(disabled) {
+    this.disabled = disabled;
+  }
+
   checkValidity() {
     return this.internals.checkValidity();
   }
@@ -99,6 +168,13 @@ export class TextInputComponent extends HTMLElement {
     anchor?: HTMLElement
   ): void {
     this.internals.setValidity(flags, message, anchor);
+  }
+
+  focus() {
+    this.$input.focus();
+  }
+  blur() {
+    this.$input.blur();
   }
 
   get $input(): HTMLInputElement {

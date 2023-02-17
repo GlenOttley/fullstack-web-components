@@ -27,7 +27,7 @@ const PrimaryTemplate = ({ onValidate, validators }) => {
   }, 0);
   return html`
     <form @validate="${onValidate}">
-      <in-textinput name="username" required></in-textinput>
+      <in-textinput name="username" required />
     </form>
   `;
 };
@@ -44,3 +44,35 @@ Primary.args = {
     }
   },
 };
+
+const DisabledTemplate = () => {
+  return html`
+    <in-textinput value="disabled input" disabled name="test-input" />
+  `;
+};
+
+export const Disabled = DisabledTemplate.bind({});
+
+Disabled.args = {};
+
+const ErrorTemplate = ({}) => {
+  setTimeout(() => {
+    const input = document.querySelector(`[name="username"]`);
+    input.$validator = validators['username'];
+    input.focus();
+    input.blur();
+  }, 0);
+  return html`
+    <in-textinput
+      type="text"
+      id="username"
+      name="username"
+      required
+      class="form-control"
+    />
+  `;
+};
+
+export const Error = ErrorTemplate.bind({});
+
+Error.args = {};
