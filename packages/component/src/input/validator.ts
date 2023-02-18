@@ -1,5 +1,3 @@
-import { html } from 'lit-html';
-
 export type Validator = {
   validations: {
     flag: ValidityStateFlags;
@@ -22,10 +20,12 @@ export function validate(elem: any, showError: boolean) {
   const activeValidators = [];
 
   elem.$validator.validations.forEach((validator) => {
+    // if the input fails the condition
     if (validator.condition(elem)) {
       elem.setValidity(validator.flag, validator.message);
       activeValidators.push(validator);
 
+      // display the error to the user
       if (showError) {
         if (elem.$input) {
           elem.$input.classList.add('error');
@@ -39,6 +39,7 @@ export function validate(elem: any, showError: boolean) {
     }
   });
 
+  // if the element passes all validations, marks the input valid and clears all errors
   if (!activeValidators.length) {
     elem.setValidity({});
     if (elem.$input) {
@@ -49,5 +50,6 @@ export function validate(elem: any, showError: boolean) {
     }
   }
 
+  // dispatch a custom event from our custom element called 'validate' which will bubble up to the containing form element
   elem.dispatchEvent(new CustomEvent('validate', { bubbles: true }));
 }
