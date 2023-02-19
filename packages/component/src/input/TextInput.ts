@@ -1,14 +1,10 @@
-import {
-  IElementInternals,
-  ValidityStateFlags,
-} from 'types/lib.elementInternals';
 import { validate, Validator } from './validator';
 
 export class TextInputComponent extends HTMLElement {
   static formAssociated = true;
   private $attr = {};
-  private internals: IElementInternals;
-  public attachInternals: () => IElementInternals;
+  private internals: ElementInternals;
+  public attachInternals: () => ElementInternals;
   public $validator: Validator;
   constructor() {
     super();
