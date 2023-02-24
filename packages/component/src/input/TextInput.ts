@@ -1,4 +1,4 @@
-import { Component, attachShadow, html, css } from '@in/common';
+import { Component, attachShadow, Listen, html, css } from '@in/common';
 import { validate, Validator } from './validator';
 
 @Component({
@@ -74,30 +74,26 @@ export class TextInputComponent extends HTMLElement {
     attachShadow(this);
     this.internals = this.attachInternals();
   }
+
   connectedCallback() {
     for (let prop in this.$attr) {
       this.$input.setAttribute(prop, this.$attr[prop]);
     }
-    this.$input.onblur = () => {
-      this.onValidate(true);
-    };
-    this.$input.onkeyup = () => {
-      this.onChange();
-    };
-    this.$input.onchange = () => {
-      this.onChange();
-    };
-    this.onValidate(false);
+    validate(this, false);
   }
+
   formDisabledCallback(disabled) {
     this.disabled = disabled;
   }
+
   formStateRestoreCallback(state: string, mode: string) {
     this.value = state;
   }
+
   formResetCallback(state: string) {
     this.value = this.getAttribute('value') || '';
   }
+
   attributeChangedCallback(name, prev, next) {
     this.$attr[name] = next;
     switch (name) {
@@ -136,6 +132,7 @@ export class TextInputComponent extends HTMLElement {
         break;
     }
   }
+
   static get observedAttributes() {
     return [
       'name',
@@ -152,54 +149,71 @@ export class TextInputComponent extends HTMLElement {
       'value',
     ];
   }
+
   get $input(): HTMLInputElement {
     return this.shadowRoot.querySelector('input');
   }
+
   get validity() {
     return this.internals.validity;
   }
+
   get validationMessage() {
     return this.internals.validationMessage;
   }
+
   get list() {
     return this.$input.list;
   }
+
   get minLength() {
     return this.$input.minLength;
   }
+
   set minLength(min: number) {
     this.$input.minLength = min;
   }
+
   get maxLength() {
     return this.$input.maxLength;
   }
+
   set maxLength(max: number) {
     this.$input.maxLength = max;
   }
+
   get readOnly() {
     return this.$input.readOnly;
   }
+
   get pattern() {
     return this.$input.pattern;
   }
+
   set pattern(pattern: string) {
     this.$input.pattern = pattern;
   }
+
   get placeholder() {
     return this.$input.placeholder;
   }
+
   get spellcheck() {
     return this.$input.spellcheck;
   }
+
   get type() {
     return this.$input.type ?? 'text';
   }
+
   set type(type: string) {
     this.$input.setAttribute('type', type);
   }
+
   get disabled() {
     return this.$input.disabled;
   }
+
   set disabled(value: boolean | string) {
     if (value === 'true' || value === true) {
       this.$input.setAttribute('disabled', 'true');
@@ -208,9 +222,11 @@ export class TextInputComponent extends HTMLElement {
       this.$input.removeAttribute('disabled');
     }
   }
+
   get required(): boolean {
     return this.$input.required;
   }
+
   set required(value: boolean | string) {
     if (value === 'true' || value === true) {
       this.$input.setAttribute('required', 'true');
@@ -219,21 +235,28 @@ export class TextInputComponent extends HTMLElement {
       this.$input.removeAttribute('required');
     }
   }
+
   get value(): string {
     return this.$input.value;
   }
+
   set value(value: string) {
     this.$input.value = value;
   }
+
   checkValidity() {
     return this.internals.checkValidity();
   }
+
   reportValidity() {
     return this.internals.reportValidity();
   }
-  onValidate(showError: boolean) {
-    validate(this, showError);
+
+  @Listen('blur', 'input')
+  onValidate() {
+    validate(this, true);
   }
+
   setValidity(
     flags: ValidityStateFlags,
     message?: string,
@@ -241,15 +264,20 @@ export class TextInputComponent extends HTMLElement {
   ): void {
     this.internals.setValidity(flags, message, anchor);
   }
+
+  @Listen('change', 'input')
+  @Listen('keyup', 'input')
   onChange() {
     this.shadowRoot.querySelector('.message').innerHTML = '';
     this.$input.classList.remove('error');
     this.$input.removeAttribute('aria-invalid');
     this.internals.setFormValue(this.value, this.value);
   }
+
   focus() {
     this.$input.focus();
   }
+
   blur() {
     this.$input.blur();
   }

@@ -7,3 +7,4 @@ export {
   html,
   css,
 } from './src/template';
+export { Listen } from './src/event';
