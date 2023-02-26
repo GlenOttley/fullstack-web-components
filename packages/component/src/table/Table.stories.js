@@ -1,6 +1,7 @@
 import { html } from 'lit-html';
 import { TableCardComponent } from './TableCard';
 import { TableComponent } from './Table';
+import { CardComponent } from './../card/Card';
 
 const columnData = [
   {
@@ -83,13 +84,20 @@ export default {
   component: 'in-tablecard',
 };
 
-export { TableCardComponent, TableComponent };
+export { CardComponent, TableCardComponent, TableComponent };
 
 const Template = ({ channelName, context }) => {
-  return html` <in-tablecard channel="${channelName}"></in-tablecard> `;
+  const channel = new BroadcastChannel(channelName);
+  setTimeout(() => {
+    channel.postMessage({
+      type: 'data',
+      detail: context,
+    });
+  }, 0);
+  return html`<in-tablecard channel="${channelName}"></in-tablecard>`;
 };
 
-const Primary = Template.bind({});
+export const Primary = Template.bind({});
 Primary.args = {
   channelName: 'table:one',
   context: TableContext,

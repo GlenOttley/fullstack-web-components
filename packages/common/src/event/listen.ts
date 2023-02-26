@@ -43,7 +43,7 @@ export function Listen(
     }
 
     function removeListener() {
-      getContext(this).removeListener(eventName, this[symbolMethod]);
+      getContext(this).removeEventListener(eventName, this[symbolMethod]);
     }
 
     // call the users connectedCallback declared in the same class decorated by Listen()
