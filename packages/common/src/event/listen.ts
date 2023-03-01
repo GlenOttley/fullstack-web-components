@@ -10,7 +10,7 @@ type MethodDecoratorFactoryFunction = (
 
 export function Listen(
   eventName: string,
-  // the element on which we will call add/remove event listener on, otherwise equal to 'this'
+  // the element which we will call add/remove event listener on, otherwise equal to 'this'
   selector?: string
 ): MethodDecoratorFactoryFunction {
   return function decorator(

@@ -1,6 +1,12 @@
 import { html } from 'lit-html';
-import { TableCardComponent } from './TableCard';
-import { TableComponent } from './Table';
+import {
+  TableCardComponent,
+  TableComponent,
+  ColumnData,
+  TdComponent,
+  TrComponent,
+} from './';
+import { TextInputComponent } from '../input/TextInput';
 import { CardComponent } from './../card/Card';
 
 const columnData = [
@@ -77,23 +83,26 @@ const rowData = [
   },
 ];
 
-const TableContext = { rowData, columnData };
+const TableContext = {
+  rowData,
+  columnData,
+};
 
 export default {
-  title: 'Components/TableCard',
+  title: 'Components/Table',
   component: 'in-tablecard',
 };
 
-export { CardComponent, TableCardComponent, TableComponent };
-
 const Template = ({ channelName, context }) => {
+  // create a new BroadcastChannel with the arguments passed to the Primary story
+  // dispatch a 'data' message with the row and column data to populate the nested TableComponent within TableCardComponent
   const channel = new BroadcastChannel(channelName);
   setTimeout(() => {
     channel.postMessage({
       type: 'data',
       detail: context,
     });
-  }, 0);
+  }, 1);
   return html`<in-tablecard channel="${channelName}"></in-tablecard>`;
 };
 
