@@ -1,6 +1,13 @@
 import { html } from 'lit-html';
-import { ButtonComponent } from '../button/Button';
-import { DialogComponent } from './Dialog';
+import {
+  DialogComponent,
+  ModalComponent,
+  TooltipComponent,
+  DialogStack,
+} from './index.ts';
+
+// instantiate a new global instance of DialogStack on the window object
+window.__dialogStack = new DialogStack();
 
 export default {
   title: 'Components/Dialog',
@@ -32,5 +39,3 @@ Primary.args = {
   templateSelector: '[data-template-id="dialog-hello"]',
   variant: 'modal',
 };
-
-// export { ButtonComponent, DialogComponent };
