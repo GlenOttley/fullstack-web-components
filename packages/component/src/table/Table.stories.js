@@ -5,9 +5,9 @@ import {
   ColumnData,
   TdComponent,
   TrComponent,
-} from './';
-import { TextInputComponent } from '../input/TextInput';
-import { CardComponent } from './../card/Card';
+} from './index.ts';
+import { TextInputComponent } from '../input/TextInput.ts';
+import { CardComponent } from './../card/Card.ts';
 
 const columnData = [
   {

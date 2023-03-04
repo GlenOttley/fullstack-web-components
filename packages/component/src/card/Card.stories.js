@@ -1,8 +1,9 @@
-import { CardComponent } from './Card';
+import { CardComponent } from './Card.ts';
 import { html } from 'lit-html';
 
 export default {
   title: 'Components/Card',
+  component: 'in-card',
   argTypes: {
     image: {
       control: { type: 'text' },

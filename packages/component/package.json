@@ -7,6 +7,7 @@
   "types": "dist/types/index.d.ts",
   "type": "module",
   "scripts": {
+    "analyze": "yarn clean && yarn build && custom-elements-manifest analyze --dev --exclude \"[./**/*.stories.js]\" && node manifest",
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rimraf dist node_modules",
     "build": "yarn clean && make-dir dist && rollup -c rollup.config.js && tsc -p tsconfig.json",
@@ -42,5 +43,6 @@
       "es2015": "./dist/fesm2015/index.js",
       "default": "./dist/fesm2015/index.js"
     }
-  }
+  },
+  "customElements": "custom-elements.json"
 }
