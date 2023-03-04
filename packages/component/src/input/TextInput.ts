@@ -1,3 +1,7 @@
+import {
+  IElementInternals,
+  ValidityStateFlags,
+} from 'types/lib.elementInternals';
 import { Component, attachShadow, Listen, html, css } from '@in/common';
 import { validate, Validator } from './validator';
 
@@ -53,7 +57,7 @@ import { validate, Validator } from './validator';
   `,
   template: html`
     <div class="control">
-      <input type="text" />
+      <input type="text" aria-describedby="message" />
     </div>
     <div
       class="message"
@@ -65,10 +69,10 @@ import { validate, Validator } from './validator';
 })
 export class TextInputComponent extends HTMLElement {
   static formAssociated = true;
-  private $attr = {};
-  private internals: ElementInternals;
-  public attachInternals: () => ElementInternals;
+  private internals: IElementInternals;
+  public attachInternals: () => IElementInternals;
   public $validator: Validator;
+  private $attr = {};
   constructor() {
     super();
     attachShadow(this);
@@ -252,17 +256,17 @@ export class TextInputComponent extends HTMLElement {
     return this.internals.reportValidity();
   }
 
-  @Listen('blur', 'input')
-  onValidate() {
-    validate(this, true);
-  }
-
   setValidity(
     flags: ValidityStateFlags,
     message?: string,
     anchor?: HTMLElement
   ): void {
     this.internals.setValidity(flags, message, anchor);
+  }
+
+  @Listen('blur', 'input')
+  onValidate() {
+    validate(this, true);
   }
 
   @Listen('change', 'input')

@@ -1,3 +1,5 @@
+import { ValidityStateFlags } from 'types/lib.elementInternals';
+
 export type Validator = {
   validations: {
     flag: ValidityStateFlags;
