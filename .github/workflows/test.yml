@@ -6,7 +6,7 @@ jobs:
     name: e2e on Chrome
     steps:
       - uses: actions/checkout@v2
-      - uses: cypress-io/github-actions@v2
+      - uses: cypress-io/github-action@v2
         with:
           install-command: yarn install
           browser: chrome
