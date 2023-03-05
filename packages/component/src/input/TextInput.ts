@@ -1,6 +1,25 @@
+import {
+  IElementInternals,
+  ValidityStateFlags,
+} from 'types/lib.elementInternals';
 import { Component, attachShadow, Listen, html, css } from '@in/common';
 import { validate, Validator } from './validator';
 
+/**
+ * Renders an input element.
+ * @tag {string} in-textinput
+ * @attr {string} name - Name of the form control. Submitted with the form as part of a name/value pair
+ * @attr {string} type - Type of form control
+ * @attr {boolean} required -  A value is required or must be check for the form to be submittable
+ * @attr {string} minlength - Minimum length (number of characters) of value
+ * @attr {string} maxlength - Maximum length (number of characters) of value
+ * @attr {string} pattern - Pattern the value must match to be valid
+ * @attr {string} list - Value of the id attribute of the <datalist> of autocomplete options
+ * @attr {string} placeholder - Text that appears in the form control when it has no value set
+ * @attr {boolean} readonly - The value is not editable
+ * @attr {string} size - Size of the control
+ * @attr {string} spellcheck - Defines whether the element may be checked for spelling errors.
+ */
 @Component({
   selector: 'in-textinput',
   style: css`
@@ -53,7 +72,7 @@ import { validate, Validator } from './validator';
   `,
   template: html`
     <div class="control">
-      <input type="text" />
+      <input type="text" aria-describedby="message" />
     </div>
     <div
       class="message"
@@ -65,10 +84,10 @@ import { validate, Validator } from './validator';
 })
 export class TextInputComponent extends HTMLElement {
   static formAssociated = true;
-  private $attr = {};
-  private internals: ElementInternals;
-  public attachInternals: () => ElementInternals;
+  private internals: IElementInternals;
+  public attachInternals: () => IElementInternals;
   public $validator: Validator;
+  private $attr = {};
   constructor() {
     super();
     attachShadow(this);
@@ -252,17 +271,17 @@ export class TextInputComponent extends HTMLElement {
     return this.internals.reportValidity();
   }
 
-  @Listen('blur', 'input')
-  onValidate() {
-    validate(this, true);
-  }
-
   setValidity(
     flags: ValidityStateFlags,
     message?: string,
     anchor?: HTMLElement
   ): void {
     this.internals.setValidity(flags, message, anchor);
+  }
+
+  @Listen('blur', 'input')
+  onValidate() {
+    validate(this, true);
   }
 
   @Listen('change', 'input')
