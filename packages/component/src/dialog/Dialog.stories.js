@@ -6,7 +6,6 @@ import {
   DialogStack,
 } from './index.ts';
 
-// instantiate a new global instance of DialogStack on the window object
 window.__dialogStack = new DialogStack();
 
 export default {

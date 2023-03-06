@@ -36,6 +36,9 @@ import { Component, attachShadow, html, css } from '@in/common';
     }
   `,
   template: html`
+    <div>
+      <slot name="action"></slot>
+    </div>
     <header>
       <slot name="header"></slot>
     </header>
