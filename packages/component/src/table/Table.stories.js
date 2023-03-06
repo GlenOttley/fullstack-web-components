@@ -58,7 +58,7 @@ const rowData = [
     postalCode: '90277',
   },
   {
-    email: 'joe@gmail.com',
+    email: 'glen@gmail.com',
     phoneNumber: '(310) 555 5555',
     street: '100 Camino Real',
     city: 'Los Angeles',
