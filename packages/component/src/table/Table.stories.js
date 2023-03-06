@@ -50,7 +50,7 @@ const columnData = [
 
 const rowData = [
   {
-    email: 'joe@gmail.com',
+    email: 'glenottley@gmail.com',
     phoneNumber: '(310) 555 5555',
     street: '100 Camino Real',
     city: 'Los Angeles',
