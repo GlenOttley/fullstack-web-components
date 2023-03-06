@@ -17,4 +17,4 @@ jobs:
       - run: yarn predeploy
       - run: yarn deploy-storybook -- --ci
         env:
-          GH_TOKEN: ${{ github.actor }}:${{ secrets.GIT_TOKEN }}
+          GH_TOKEN: GlenOttley:${{ secrets.GIT_TOKEN }}
