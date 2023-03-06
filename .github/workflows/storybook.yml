@@ -1,0 +1,20 @@
+name: build
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install node
+        uses: actions/setup-node@v2
+        with:
+            node-version: "16"
+            cache: "yarn"
+      - run: yarn install
+      - run: yarn predeploy
+      - run: yarn deploy-storybook -- --ci
+        env:
+          GH_TOKEN: ${{ github.actor }}:${{ secrets.GIT_TOKEN }}
