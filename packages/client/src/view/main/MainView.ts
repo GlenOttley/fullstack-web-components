@@ -13,7 +13,7 @@ const styles = css`
 `;
 
 const shadowTemplate = html`
-  <header>Header</header>
+  <app-header></app-header>
   <div id="content-root">Content</div>
   <footer>Footer</footer>
 `;
