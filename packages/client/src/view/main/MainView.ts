@@ -1,4 +1,7 @@
 import { Component, attachShadow, html, css } from '@in/common';
+import { CookieService, COOKIES } from '../../service/cookies';
+
+const cookieService = new CookieService();
 
 const styles = css`
   :host {
@@ -15,7 +18,7 @@ const styles = css`
 const shadowTemplate = html`
   <app-header></app-header>
   <div id="content-root">Content</div>
-  <footer>Footer</footer>
+  <cookie-footer></cookie-footer>
 `;
 
 @Component({
@@ -27,5 +30,19 @@ export class MainView extends HTMLElement {
   constructor() {
     super();
     attachShadow(this);
+  }
+
+  connectedCallback() {
+    cookieService.getPermission().then((cookies) => {
+      if (cookies.permission === COOKIES.ACCEPT) {
+        this.$cookieFooter.setAttribute('hidden', 'true');
+      } else {
+        this.$cookieFooter.removeAttribute('hidden');
+      }
+    });
+  }
+
+  get $cookieFooter() {
+    return this.shadowRoot.querySelector('cookie-footer');
   }
 }

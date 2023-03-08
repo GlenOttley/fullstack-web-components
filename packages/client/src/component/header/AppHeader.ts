@@ -87,6 +87,6 @@ export class AppHeader extends HTMLElement {
   }
 
   get $login(): Element {
-    return this.shadowRoot.querySelector('login-link') as Element;
+    return this.shadowRoot.querySelector('.login-link') as Element;
   }
 }
