@@ -1,6 +1,11 @@
-import { Component, attachShadow, html, css } from '@in/common';
-import { CookieService, COOKIES } from '../../service/cookies';
+// This is the component
+// It handles a template client-side for browsers that can't handle declarative Shadow DOM (Firefox & Safari)
+import { attachShadow, html, css, Component } from '@in/common';
 
+import { SESSION, SessionService } from './../../service/session';
+import { COOKIES, CookieService } from './../../service/cookies';
+
+const sessionService = new SessionService();
 const cookieService = new CookieService();
 
 const styles = css`
@@ -114,8 +119,12 @@ export class MainView extends HTMLElement {
     super();
     attachShadow(this);
   }
-
   connectedCallback() {
+    sessionService.getSession().then((status) => {
+      if (status.session === SESSION.OPEN) {
+        this.$dashboardLink.removeAttribute('hidden');
+      }
+    });
     cookieService.getPermission().then((cookies) => {
       if (cookies.permission === COOKIES.ACCEPT) {
         this.$cookieFooter.setAttribute('hidden', 'true');
@@ -124,8 +133,10 @@ export class MainView extends HTMLElement {
       }
     });
   }
-
   get $cookieFooter() {
     return this.shadowRoot.querySelector('cookie-footer');
+  }
+  get $dashboardLink() {
+    return this.shadowRoot.querySelector('.dashboard-link');
   }
 }
